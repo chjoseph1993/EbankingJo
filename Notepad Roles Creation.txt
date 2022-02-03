@@ -1,0 +1,4 @@
+RoleName&&&&RoleDescription&&&&RoleType&&&&Results
+CashieerBOM&&&&Tester1&&&&E
+ManagerBOM&&&&Tester2&&&&E
+SuperwiserBOM&&&&Tester3&&&&E

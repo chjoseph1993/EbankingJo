@@ -1,0 +1,7 @@
+EmployeeName###LoginPassword###Role###Branch###Result
+Joseph###Josephch###air craft manager###hyderabad44	#^%$Emp succ
+Sruthi###Josephch###srnagar###hyderabad44	#^%$Emp succ
+Ramu###Josephch###BANKER1###hyderabad44	#^%$Emp succ
+Mahendra###Josephch###BANKER2###hyderabad44	#^%$Emp succ
+Swapna###Josephch###BANKER3###hyderabad44	#^%$Emp succ
+Sujitha###Josephch###AssistenceManager###hyderabad44	#^%$Emp succ

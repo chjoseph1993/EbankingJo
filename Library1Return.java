@@ -1,4 +1,8 @@
-package com.ebanking.master;
+package com.ebanking.properties;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -9,14 +13,20 @@ public class Library1Return {
 	
 	WebDriver driver;
 	String Expval,Actval;
-	
+	FileInputStream FIS;
+	Properties PR;
 
 	
-public String openApp(String Url) throws InterruptedException
+public String openApp(String Url) throws InterruptedException, IOException
 {
+	FIS=new FileInputStream("D:\\Ebanking-Joseph2\\Ebanking.Joseph\\src\\com\\ebanking\\joseph\\properties\\Rep.properties");
+	PR=new Properties();
+	PR.load(FIS);
+	
 	String Expval="Ranford Bank";
 	
 	//Firefox browser
+	
 	System.setProperty("webdriver.gecko.driver","./Drivers\\geckodriver.exe");
 	driver=new FirefoxDriver();
 	// to maximize browser
@@ -48,9 +58,9 @@ public String openApp(String Url) throws InterruptedException
 	{
 		Expval="Welcome to Admin";
 		
-		driver.findElement(By.id("txtuId")).sendKeys(Un);
-		driver.findElement(By.id("txtPword")).sendKeys(Pwd);
-		driver.findElement(By.id("login")).click();
+		driver.findElement(By.id(PR.getProperty("Uname"))).sendKeys(Un);
+		driver.findElement(By.id(PR.getProperty("Pswd"))).sendKeys(Pwd);
+		driver.findElement(By.id(PR.getProperty("Lgn"))).click();
 		
 		Thread.sleep(1000);
 		Actval=driver.findElement(By.xpath("/html/body/table/tbody/tr/td/table/tbody/tr[4]/td/table/tbody/tr[1]/td[4]/strong/font/font")).getText();
@@ -70,33 +80,33 @@ public String openApp(String Url) throws InterruptedException
 	}
 	
 
-		public String BranchCre(String Bname,String Add1,String Add2,String Add3,String Area,String Zipcode,String Ctry,String State,String City) throws InterruptedException
+		public String BranchCre(String Bname,String Add1,String Add2,String Add3,String Area,String Zipcode) throws InterruptedException
 		{
 			Expval="Sucessfully";
 		      
-			driver.findElement(By.xpath(".//*[@id='Table_01']/tbody/tr[2]/td/table/tbody/tr[2]/td/a/img")).click();
-			driver.findElement(By.id("BtnNewBR")).click();
+			driver.findElement(By.xpath(PR.getProperty("BBranch"))).click();
+			driver.findElement(By.id(PR.getProperty("BBranchCre"))).click();
 			
-			driver.findElement(By.id("txtbName")).sendKeys(Bname);
-			driver.findElement(By.id("txtAdd1")).sendKeys(Add1);
-			driver.findElement(By.id("Txtadd2")).sendKeys(Add2);
-			driver.findElement(By.id("txtadd3")).sendKeys(Add3);
-			driver.findElement(By.id("txtArea")).sendKeys(Area);
-			driver.findElement(By.id("txtZip")).sendKeys(Zipcode);
+			driver.findElement(By.id(PR.getProperty("Bname"))).sendKeys(Bname);
+			driver.findElement(By.id(PR.getProperty("Badd1"))).sendKeys(Add1);
+			driver.findElement(By.id(PR.getProperty("Badd2"))).sendKeys(Add2);
+			driver.findElement(By.id(PR.getProperty("Badd3"))).sendKeys(Add3);
+			driver.findElement(By.id(PR.getProperty("Barea"))).sendKeys(Area);
+			driver.findElement(By.id(PR.getProperty("Bzipcode"))).sendKeys(Zipcode);
 			
 			//Dropdowns
-			Select ctry=new Select(driver.findElement(By.id("lst_counrtyU")));
+			Select ctry=new Select(driver.findElement(By.id(PR.getProperty("Bcountry"))));
 			ctry.selectByVisibleText("INDIA");
 			
-			Select state=new Select(driver.findElement(By.id("lst_stateI")));
+			Select state=new Select(driver.findElement(By.id(PR.getProperty("Bstate"))));
 			state.selectByVisibleText("Delhi");
 			
 			
-			Select city=new Select(driver.findElement(By.id("lst_cityI")));
+			Select city=new Select(driver.findElement(By.id(PR.getProperty("Bcity"))));
 			city.selectByVisibleText("Delhi");
 			
 			// submit
-			driver.findElement(By.id("btn_insert")).click();
+			driver.findElement(By.id(PR.getProperty("Bsubmit"))).click();
 			
 			Thread.sleep(1000);
 			
@@ -126,23 +136,23 @@ public String openApp(String Url) throws InterruptedException
 		}
 		
 		
-		public String Rolecre(String Rname,String Rdesc,String RType) throws InterruptedException
+		public String Rolecre(String Rname,String Rdesc) throws InterruptedException
 		{
 			Expval=" Sucessfully";
-			driver.findElement(By.xpath("/html/body/table/tbody/tr/td/table/tbody/tr[4]/td/table/tbody/tr[1]/td[2]/table/tbody/tr[2]/td/table/tbody/tr[4]/td/a/img")).click();
-			driver.findElement(By.id("btnRoles")).click();
+			driver.findElement(By.xpath(PR.getProperty("RRole"))).click();
+			driver.findElement(By.id(PR.getProperty("RRoleCre"))).click();
 
 			
-			driver.findElement(By.id("txtRname")).sendKeys(Rname);
-			driver.findElement(By.id("txtRDesc")).sendKeys(Rdesc);
+			driver.findElement(By.id(PR.getProperty("Rname"))).sendKeys(Rname);
+			driver.findElement(By.id(PR.getProperty("Rdesc"))).sendKeys(Rdesc);
 			
 			//drop Downs
 			
-			Select roletype=new Select(driver.findElement(By.id("lstRtypeN")));
-			roletype.selectByVisibleText("E");
+			Select roletype=new Select(driver.findElement(By.id(PR.getProperty("Rtype"))));
+			roletype.selectByVisibleText(Rdesc);
 			
 			//submit
-			driver.findElement(By.id("btninsert")).click();
+			driver.findElement(By.id(PR.getProperty("Rsubmit"))).click();
 			
 			Thread.sleep(1000);
 			
@@ -168,25 +178,25 @@ public String openApp(String Url) throws InterruptedException
 			 return "Roll succ";
 		}
 		
-		public String Employeecre(String Ename,String Lpwd, String Role, String Branch) throws InterruptedException
+		public String Employeecre(String Ename,String Lpwd) throws InterruptedException
 		{
 			Expval="Try again";
 			
-			driver.findElement(By.xpath("/html/body/table/tbody/tr/td/table/tbody/tr[4]/td/table/tbody/tr[1]/td[2]/table/tbody/tr[2]/td/table/tbody/tr[8]/td/a/img")).click();
-			driver.findElement(By.id("BtnNew")).click();
+			driver.findElement(By.xpath(PR.getProperty("EEmployee"))).click();
+			driver.findElement(By.id(PR.getProperty("EEmployeeCre"))).click();
 			
-			driver.findElement(By.id("txtUname")).sendKeys(Ename);
-			driver.findElement(By.id("txtLpwd")).sendKeys(Lpwd);
+			driver.findElement(By.id(PR.getProperty("Ename"))).sendKeys(Ename);
+			driver.findElement(By.id(PR.getProperty("Elpswd"))).sendKeys(Lpwd);
 			
 			//drop down
-			Select role=new Select(driver.findElement(By.id("lst_Roles")));
-			role.selectByVisibleText("Accountant");
+			Select role=new Select(driver.findElement(By.id(PR.getProperty("ERole"))));
+			role.selectByVisibleText("air craft manager");
 			
-			Select branch=new Select(driver.findElement(By.id("lst_Branch")));
-			branch.selectByVisibleText("Hyderabad444");
+			Select branch=new Select(driver.findElement(By.id(PR.getProperty("EBranch"))));
+			branch.selectByVisibleText("S R Nagar");
 			
 			//click on submit
-			driver.findElement(By.id("BtnSubmit")).click();
+			driver.findElement(By.id(PR.getProperty("Esubmit"))).click();
 			
 			Thread.sleep(1000);
 			
@@ -217,14 +227,10 @@ public String openApp(String Url) throws InterruptedException
 		{
 			driver.findElement(By.xpath("/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[4]/table/tbody/tr/td[3]/a/img")).click();
 		}
-		
-	
-		public void Close()
+
+		public void close()
 		{
 			driver.close();
+		}
 
 }
-}
-
-
-
